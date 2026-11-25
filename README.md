@@ -2,8 +2,6 @@
 
 A distraction-free Markdown editor with LaTeX math and instant preview, in the browser. Live at https://md.syahravi.id.
 
-Based on [Writing](https://github.com/josephernest/writing) by Joseph Ernest (MIT), rebranded to match [syahravi.id](https://syahravi.id).
-
 - Write on the left, see the result on the right: no delay while typing, no flickering when math is on the page.
 - Landing page = working page: the first page you open is the editor, with no welcome screen or login.
 - Your text stays in the browser (localStorage). Nothing is uploaded. The only third-party request is MathJax from cdnjs.
@@ -39,8 +37,8 @@ Deploy is Cloudflare Workers static assets (`wrangler.jsonc`, custom domain `md.
 
 `tokens.css` is copied from the syahravi.id repo without the "Trusted Partner" block. Change tokens there, then copy again. `styles.css` only uses those tokens. Fonts (Bricolage Grotesque, Hanken Grotesk, IBM Plex Mono) are self-hosted in `fonts/`. `scripts/og-image.html` renders `og-image.png`; the render command is in the file.
 
-## Credits and license
+## Credits
 
-MIT license. Original editor by Joseph Ernest. Uses [Pagedown](https://code.google.com/archive/p/pagedown/), [Pagedown Extra](https://github.com/jmcmanus/pagedown-extra), [MathJax](https://www.mathjax.org/), [jQuery](https://jquery.com/), StackOverflow's [editor code](https://gist.github.com/gdalgas/a652bce3a173ddc59f66), and the [Computer Modern](http://cm-unicode.sourceforge.net/) font.
+Uses [Pagedown](https://code.google.com/archive/p/pagedown/), [Pagedown Extra](https://github.com/jmcmanus/pagedown-extra), [MathJax](https://www.mathjax.org/), [jQuery](https://jquery.com/), StackOverflow's [editor code](https://gist.github.com/gdalgas/a652bce3a173ddc59f66), and the [Computer Modern](http://cm-unicode.sourceforge.net/) font.
 
 Some of these libraries have been slightly modified (a few lines of code) to make them work together, which is why they are included in this repo.

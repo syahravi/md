@@ -1,12 +1,12 @@
 # md (Markdown editor)
 
-Editor Markdown satu halaman dengan pratinjau langsung dan LaTeX (MathJax), fork "Writing" milik Joseph Ernest (MIT) yang di-brand ulang seperti syahravi.id. UI bahasa Inggris ("I" → "you"), audiens umum, dideploy ke `md.syahravi.id`.
+Editor Markdown satu halaman dengan pratinjau langsung dan LaTeX (MathJax), di-brand seperti syahravi.id. UI bahasa Inggris ("I" → "you"), audiens umum, dideploy ke `md.syahravi.id`.
 
 ## Development
 
 - Situs statis, tanpa build dan tanpa `package.json`. Buka `index.html`, atau layani foldernya: `rtk npx wrangler dev`.
 - Semua perintah shell lewat `rtk`.
-- Kode editor upstream (`Markdown.*.js`, `mathjax-editing_writing.js`) jangan diubah tanpa alasan; hanya `index.html`, `styles.css`, dan aset brand yang milik proyek ini.
+- Kode editor (`Markdown.*.js`, `mathjax-editing_writing.js`) jangan diubah tanpa alasan; hanya `index.html`, `styles.css`, dan aset brand yang ditulis di repo ini.
 - Cek visual di 320, 768, dan 1440 px sebelum bilang selesai. Pintasan keyboard, mode gelap, dan `@media print` harus tetap jalan.
 - OG image: render ulang `og-image.png` dari `scripts/og-image.html` (perintah Edge di komentar file).
 - Deploy memakai `wrangler.jsonc`; file non-situs disaring di `.assetsignore`. Jangan deploy tanpa diminta.
@@ -15,7 +15,7 @@ Editor Markdown satu halaman dengan pratinjau langsung dan LaTeX (MathJax), fork
 
 - Tetap satu halaman yang langsung berupa editor (Landing Page = Working Page): tanpa akun, backend, atau data yang dikirim ke server. Klaim "teks tidak meninggalkan browser" di dialog bantuan dan README harus tetap benar; satu-satunya request pihak ketiga adalah MathJax dari cdnjs.
 - Kunci localStorage `writing`, `latex`, `darkmode`, `serif` dipertahankan agar dokumen pengguna tetap terbaca.
-- Mode gelap tetap ada sebagai toggle pengguna (keputusan pemilik 2026-11-25), dibuat dari token yang ada tanpa warna baru. Lisensi MIT dan atribusi Joseph Ernest tetap tercantum.
+- Mode gelap tetap ada sebagai toggle pengguna (keputusan pemilik 2026-11-25), dibuat dari token yang ada tanpa warna baru. Atribusi dan lisensi asal fork sengaja tidak dicantumkan (keputusan pemilik 2026-11-25).
 
 ## Konteks lintas proyek
 
