@@ -1,71 +1,46 @@
-Writing
-=======
+# Markdown editor
 
-**Writing** is a lightweight distraction-free text editor, in the browser.
+A distraction-free Markdown editor with LaTeX math and instant preview, in the browser. Live at https://md.syahravi.id.
 
-Live version: [Writing](https://josephernest.github.io/writing/).
+Based on [Writing](https://github.com/josephernest/writing) by Joseph Ernest (MIT), rebranded to match [syahravi.id](https://syahravi.id).
 
-<img src="http://i.imgur.com/c56hDwi.gif" />
+- Write on the left, see the result on the right: no delay while typing, no flickering when math is on the page.
+- Landing page = working page: the first page you open is the editor, with no welcome screen or login.
+- Your text stays in the browser (localStorage). Nothing is uploaded. The only third-party request is MathJax from cdnjs.
+- Save as `.md`, open a `.md` file (or drop one on the page), print or save as PDF.
+- Light by default, with a dark mode toggle. The preview can use Computer Modern for a LaTeX look.
 
+## Shortcuts
 
-Installation
-----
-Just open `index.html` and that's it! There is no server code. Is that so simple? Yes!
+| Keys | Action |
+|---|---|
+| Ctrl + D | Switch view: split, preview only, editor only |
+| Ctrl + P | Print or save as PDF |
+| Ctrl + S | Save the source as a .md file |
+| Ctrl + Shift + O | Open a .md file |
+| Ctrl + Shift + L | LaTeX on or off |
+| Ctrl + Shift + D | Dark mode on or off |
+| Ctrl + Shift + R | Serif (Computer Modern) or sans-serif preview |
+| Ctrl + Shift + H | Help |
 
-Usage
-----
+All of these are also buttons in the header. `\pagebreak` in the text starts a new page when printing.
 
-* CTRL + D: Toggle display mode
+## Development
 
-* CTRL + P: Print or export as PDF
+No build step. Open `index.html`, or serve the folder:
 
-* CTRL + S: Save source code as .MD file
+```
+npx wrangler dev
+```
 
-and a few other commands (change font, etc.) that can be found in:
+Deploy is Cloudflare Workers static assets (`wrangler.jsonc`, custom domain `md.syahravi.id`). Files that are not part of the site are listed in `.assetsignore`.
 
-* CTRL+SHIFT+H or `?` bottom-left icon: Show help
+## Brand
 
+`tokens.css` is copied from the syahravi.id repo without the "Trusted Partner" block. Change tokens there, then copy again. `styles.css` only uses those tokens. Fonts (Bricolage Grotesque, Hanken Grotesk, IBM Plex Mono) are self-hosted in `fonts/`. `scripts/og-image.html` renders `og-image.png`; the render command is in the file.
 
-Why another Markdown editor? Why not just use StackEdit?
-----
-There are many online editors that support Markdown but:
+## Credits and license
 
-* half of them don't support LaTeX / MathJax (for math formulas)
-* some of them do, but have a **1-sec delay between keypress and display**, and I find this annoying, see e.g. [StackEdit](https://stackedit.io)
-* some of them have annoying flickering each time you write new text, once math is present on the page
-* most of them are not minimalist / distraction-free enough for me
+MIT license. Original editor by Joseph Ernest. Uses [Pagedown](https://code.google.com/archive/p/pagedown/), [Pagedown Extra](https://github.com/jmcmanus/pagedown-extra), [MathJax](https://www.mathjax.org/), [jQuery](https://jquery.com/), StackOverflow's [editor code](https://gist.github.com/gdalgas/a652bce3a173ddc59f66), and the [Computer Modern](http://cm-unicode.sourceforge.net/) font.
 
-That's why I decided to make **Writing**:
-
-* open-source
-* no server needed, you can run it offline
-* fast rendering (no delay when writing / no flickering of math equations)
-* **just what you need: write, preview, save the code, print or save as PDF, and nothing else**
-* LPWP website, a.k.a. "Landing Page=Working Page", i.e. the first page that you visit on the website is the page *where things actually happen*, that means that there is no annoying welcome page or login page, etc.
-
-About
-----
-Author: Joseph Ernest ([@JosephErnest](https://twitter.com/JosephErnest))
-
-Other projects: [BigPicture](http://bigpicture.bi), [bigpicture.js](https://github.com/josephernest/bigpicture.js), [AReallyBigPage](https://github.com/josephernest/AReallyBigPage), [SamplerBox](http://www.samplerbox.org), [Void](https://github.com/josephernest/void), [TalkTalkTalk](https://github.com/josephernest/TalkTalkTalk), [sdfgh](https://github.com/josephernest/sdfgh), [RaspFIP](https://github.com/josephernest/RaspFIP/), [Yopp](https://github.com/josephernest/Yopp), etc.
-
-Sponsoring and consulting
-----
-
-I am available for Python, Data science, ML, Automation consulting. Please contact me on https://afewthingz.com for freelancing requests.
-
-Do you want to support the development of my open-source projects? Please contact me!
-
-I am currently sponsored by [CodeSigningStore.com](https://codesigningstore.com/). Thank you to them for providing a DigiCert Code Signing Certificate and supporting open source software.
-
-License
-----
-MIT license
-
-Dependencies
----
-**Writing** uses [Pagedown](https://code.google.com/archive/p/pagedown/), [Pagedown Extra](https://github.com/jmcmanus/pagedown-extra), [MathJax](https://www.mathjax.org/), StackOverflow's [editor code](https://gist.github.com/gdalgas/a652bce3a173ddc59f66), and the [Computer Modern](http://cm-unicode.sourceforge.net/) font.
-
-*Note: Some of these libraries have been slightly modified (a few lines of code), to make it work all together, that's why they are included in this package.*
-
-![](https://gget.it/pixel/writing.png)
+Some of these libraries have been slightly modified (a few lines of code) to make them work together, which is why they are included in this repo.
