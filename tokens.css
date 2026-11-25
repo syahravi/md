@@ -77,15 +77,4 @@
   --z-modal:      400;
   --z-toast:      500;
   --z-tooltip:    600;
-
-  /* "Trusted Partner" — scoped extension for the Selected Work showcase only.
-     Does not replace the site-wide paper/ink/ember identity above. */
-  --font-serif:          var(--font-source-serif, "Source Serif 4", Georgia, serif);
-  --color-trust-navy:      #1B2A4A;
-  --color-trust-navy-2:    #14213A; /* hover/active state on navy */
-  --color-trust-paper:     #F8F6F3;
-  --color-trust-gold:      #C4933F; /* decorative: borders, chips, text-on-navy (5.1:1) */
-  --color-trust-gold-text: #8C6A2D; /* AA-safe gold for text/links on light backgrounds (~5.2:1) */
-  --shadow-card:       0 1px 2px rgba(27, 42, 74, 0.06), 0 1px 3px rgba(27, 42, 74, 0.08);
-  --shadow-card-hover: 0 2px 4px rgba(27, 42, 74, 0.08), 0 8px 20px rgba(27, 42, 74, 0.12);
 }

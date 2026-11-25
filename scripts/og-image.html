@@ -1,0 +1,87 @@
+<!doctype html>
+<!--
+	Sumber og-image.png (1200×630), pola sama dengan scripts/og-image.html di syahravi.id: tokens.css dan font self-host
+	dari repo ini. Render ulang dari root repo (Windows, Edge):
+	"/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" --headless=new --hide-scrollbars \
+		--force-device-scale-factor=1 --window-size=1200,630 --virtual-time-budget=10000 \
+		--screenshot="$PWD/og-image.png" "file:///$PWD/scripts/og-image.html"
+-->
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="../tokens.css" />
+		<link rel="stylesheet" href="../styles.css" />
+		<style>
+			html,
+			body {
+				width: 1200px;
+				height: 630px;
+				overflow: hidden;
+			}
+
+			body {
+				display: flex;
+				flex-direction: column;
+				padding: 72px 80px 64px;
+				background: var(--color-paper);
+				color: var(--color-ink);
+			}
+
+			.mono {
+				font-family: var(--font-mono);
+				font-weight: 500;
+				font-size: 24px;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+			}
+
+			.top {
+				display: flex;
+				justify-content: space-between;
+			}
+
+			.top__url {
+				color: var(--color-muted);
+			}
+
+			/* Headline sama dengan h1 hero syahravi.id: display 800, line-height 1.05, tracking -0.02em. */
+			h1 {
+				margin-block: auto;
+				font-family: var(--font-display);
+				font-weight: 800;
+				font-size: 116px;
+				line-height: 1.05;
+				letter-spacing: -0.02em;
+			}
+
+			/* Titik ember: satu-satunya aksen. */
+			h1 span {
+				color: var(--color-accent);
+			}
+
+			.rule {
+				height: 6px;
+				background: var(--color-ink);
+			}
+
+			.meta {
+				display: flex;
+				justify-content: space-between;
+				margin-block-start: 28px;
+				color: var(--color-muted);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="top mono">
+			<span>Syahravi</span>
+			<span class="top__url">md.syahravi.id</span>
+		</div>
+		<h1>Markdown editor<span>.</span></h1>
+		<div class="rule"></div>
+		<div class="meta mono">
+			<span>Free tool</span>
+			<span>LaTeX + live preview</span>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<meta name="theme-color" content="#FBF3F0" />
+<title>Page not found | Markdown editor</title>
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<link rel="preload" href="/fonts/hanken-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/tokens.css" />
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<header class="bar">
+<a class="mark" href="https://syahravi.id">Syahravi</a>
+</header>
+<main class="not-found">
+<p class="not-found__code">404</p>
+<h1>This page doesn&rsquo;t exist.</h1>
+<p class="not-found__body">The link might be broken, or the page moved.</p>
+<a class="link" href="/">&larr; Back to the editor</a>
+</main>
+<footer class="foot">
+<span>Syahravi &middot; &copy; <span id="year"></span> &middot; Bogor, Indonesia</span>
+</footer>
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
