@@ -1,0 +1,12 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "md",
+	"compatibility_date": "2026-11-25",
+	"observability": { "enabled": true },
+	"routes": [{ "pattern": "md.syahravi.id", "custom_domain": true }],
+	// Situs statis tanpa build: root repo disajikan apa adanya; file non-situs disaring lewat .assetsignore.
+	"assets": {
+		"directory": ".",
+		"not_found_handling": "404-page"
+	}
+}
