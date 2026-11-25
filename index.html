@@ -1,10 +1,9 @@
 <!-- 
 #    
-# Writing is an in-browser text editor, supporting LaTeX (MathJax) and Markdown, designed to be lightweight and, unlike some other similar solutions, 
-#           fast to display (no delay when writing, no flickering when writing math), as close as possible to the math.stackexchange.com editor.
+# Markdown editor with LaTeX (MathJax): write on the left, see the result on the right, no delay, no flickering when writing math.
+#           Based on "Writing" by Joseph Ernest (MIT license), rebranded for md.syahravi.id.
 # 
-# author:   Joseph Ernest (twitter: @JosephErnest)
-# url:      https://github.com/josephernest/writing
+# upstream: https://github.com/josephernest/writing (author: Joseph Ernest, twitter: @JosephErnest)
 # license:  MIT license
 # based on: Pagedown (https://code.google.com/archive/p/pagedown/, https://github.com/balpha/pagedown)
 #           Pagedown Extra (https://github.com/jmcmanus/pagedown-extra)
@@ -14,132 +13,105 @@
 -->
 
 <!DOCTYPE html>
-<html class="fixedheight texroman">
+<html lang="en">
 <head>
-<link rel="icon" href="favicon.ico" />
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />  
-<title>Writing</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<style type="text/css">
-@font-face { font-family: texroman; src: url(cmunrm.otf); font-weight: 400; font-style: normal; font-stretch: normal; }
-@font-face { font-family: texroman; src: url(cmunrb.otf); font-weight: 700; font-style: normal; font-stretch: normal; }
-
-html { font-family: sans-serif; }
-* { margin: 0; padding: 0; border: 0; outline: 0; }
-.texroman { font-family: texroman !important; }    
-.unselectable { -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
-.fixedheight { height: 100%; }
-.column { padding: 20px; }
-#wmd-button-bar { display: none; }
-#wmd-input { float: left; box-sizing: border-box; width: 50%; resize: horizontal; font-size: 14px; border-right: 1px solid #ddd; height: 100%; overflow: y-scroll; }
-#wmd-preview { overflow-y: auto; overflow-x: hidden; font-size: 15px; height: 100%; box-sizing: border-box; min-height: 100vh; }
-#wmd-preview li { margin-left: 20px; }
-#wmd-preview code, #wmd-input { font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif; }
-#wmd-preview p code, #wmd-preview li code { background-color: #f5f5f5; white-space: pre-wrap; padding: 3px 5px; font-size: 13px; }
-#wmd-preview pre { background-color: #f5f5f5; padding: 5px; margin: 0.5em 0 1em; overflow-x: auto; word-wrap: normal; font-size: 13px; }
-#wmd-preview blockquote { background-color: #defcff; padding: 10px; margin: 0.5em 0 1em; overflow-x: auto; word-wrap: normal; border-left: 2px solid #0ae2f5; }
-#wmd-preview blockquote p { margin-bottom: 0; }
-#wmd-preview hr { background-color: #ddd; color: #ddd; height: 1px; margin-bottom: 15px; margin-top: 15px; }
-#wmd-preview h1 { margin-bottom: 0.5em; font-size: 1.4em; }
-#wmd-preview h2 { margin-bottom: 0.5em; font-size: 1.2em; }
-#wmd-preview h3 { margin-bottom: 0.5em; font-size: 1em; }
-#wmd-preview p { margin-bottom: 1em; line-height: 1.25; }
-#wmd-preview ul { margin-bottom: 1.5em; line-height: 1.25; }
-#wmd-preview img { max-width: 100%; max-height: 100%; }
-#wmd-preview table { display: block; width: 100%; overflow: auto; border-collapse: collapse; margin-bottom: 0.5em; }
-#wmd-preview table th { font-weight: bold; }
-#wmd-preview table th, #wmd-preview table td { padding: 6px 13px; border: 1px solid #ddd; }
-#wmd-preview table tr { background-color: #fff; border-top: 1px solid #ccc; }
-#wmd-preview table tr:nth-child(2n) { background-color: #f8f8f8; }
-#wmd-preview a { text-decoration: none; color: #07c; }
-#wmd-preview .pagebreak { border-bottom: 1px dashed #eee; padding-top: 20px; margin-bottom: 30px; }
-#helpicon { position: absolute; bottom: 0; left: 0; margin: 5px; color: #ccc; cursor: pointer; font-family: sans-serif;  font-size: 15px; }
-#help { display: none; position: fixed; top: 10%; height: 70%; left: 25%; max-width: 50%; overflow: hidden; background-color: white; border: 1px solid #ccc; padding: 15px 30px 20px 30px; overflow-y: auto; }
-#help pre {  word-wrap: break-word !important; white-space: pre-wrap !important; }
-#closeicon { position: fixed; top: 10%; left: 25%; margin: 5px 8px; color: #ccc; cursor: pointer; font-family: sans-serif; }
-#openFileInput { position: absolute; display: none; }
-
-@media print { 
-    #helpicon { display: none; } 
-    #wmd-preview .pagebreak { opacity: 0; }
-}
-
-.dark-mode #wmd-input, .dark-mode #wmd-preview  { background-color: #212121; color: #FAFAFA; border-color: #757575;}
-.dark-mode #wmd-preview a, .dark-mode #help a, .dark-mode .wmd-prompt-dialog a { color: #90CAF9; }
-.dark-mode #wmd-preview p code, .dark-mode #wmd-preview li code, .dark-mode #wmd-preview pre { background-color: #424242; }
-.dark-mode #wmd-preview table th, .dark-mode #wmd-preview table td { border-color: #757575; }
-.dark-mode #wmd-preview table tr { background-color: #424242; border-color: #757575; }
-.dark-mode #help { background-color: #424242; border-color: #757575; color: #FAFAFA; }
-.dark-mode .wmd-prompt-dialog { background-color: #424242; color: #FAFAFA; }
-.dark-mode .wmd-prompt-dialog input { background-color: #212121; color: #FAFAFA; }
-.dark-mode #wmd-preview blockquote { background-color: #00796B; border-color: #004D40; }
-
-</style>
-
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Markdown editor</title>
+<script>
+// Terapkan mode gelap sebelum cat pertama supaya tidak berkedip.
+try { if (localStorage.getItem("darkmode") === "1") document.documentElement.classList.add("dark-mode"); } catch (e) {}
+</script>
+<link rel="preload" href="fonts/hanken-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="styles.css" />
 </head>
-<body class="fixedheight">
+<body data-mode="both">
+<header class="bar">
+<a class="mark" href="https://syahravi.id">Syahravi</a>
+<h1 class="tool">Markdown editor</h1>
+<div class="toolbar" role="toolbar" aria-label="Editor actions">
+<button type="button" class="btn" id="btn-view" aria-keyshortcuts="Control+D">View: Split</button>
+<button type="button" class="btn" id="btn-open" aria-keyshortcuts="Control+Shift+O">Open</button>
+<button type="button" class="btn" id="btn-save" aria-keyshortcuts="Control+S">Save</button>
+<button type="button" class="btn" id="btn-print" aria-keyshortcuts="Control+P">Print</button>
+<button type="button" class="btn" id="btn-latex" aria-pressed="true" aria-keyshortcuts="Control+Shift+L">LaTeX</button>
+<button type="button" class="btn" id="btn-dark" aria-pressed="false" aria-keyshortcuts="Control+Shift+D">Dark</button>
+<button type="button" class="btn" id="btn-serif" aria-pressed="false" aria-keyshortcuts="Control+Shift+R">Serif</button>
+<button type="button" class="btn" id="btn-help" aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+H">Help</button>
+</div>
+</header>
+
+<main class="panes">
+<div id="wmd-button-bar" class="wmd-button-bar" hidden></div>
+<textarea id="wmd-input" class="wmd-input" spellcheck="false" aria-label="Markdown source"></textarea>
+<div id="wmd-preview" class="wmd-preview" role="region" aria-label="Preview">
+<noscript>This editor requires JavaScript.</noscript>
+</div>
+</main>
+
+<footer class="foot">
+<span>Syahravi &middot; &copy; <span id="year"></span> &middot; Bogor, Indonesia</span>
+<a href="https://github.com/josephernest/writing" target="_blank" rel="noopener">Based on Writing by Joseph Ernest</a>
+<a href="https://github.com/syahravi/md" target="_blank" rel="noopener">Source</a>
+</footer>
+
+<input id="openFileInput" type="file" accept=".md,.markdown,.txt,text/markdown,text/plain" hidden />
+
+<dialog id="help" aria-labelledby="help-title">
+<div class="help-head">
+<h2 id="help-title">Markdown editor</h2>
+<form method="dialog"><button type="submit" class="btn">Close</button></form>
+</div>
+<p>Write on the left and the preview updates on the right as you type. Math works with LaTeX syntax. Your text stays in this browser (localStorage); nothing is uploaded.</p>
+
+<h3>Shortcuts</h3>
+<table>
+<tr><td><kbd>Ctrl</kbd> + <kbd>D</kbd></td><td>Switch view: split, preview only, editor only</td></tr>
+<tr><td><kbd>Ctrl</kbd> + <kbd>P</kbd></td><td>Print or save as PDF</td></tr>
+<tr><td><kbd>Ctrl</kbd> + <kbd>S</kbd></td><td>Save the source as a .md file</td></tr>
+<tr><td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>O</kbd></td><td>Open a .md file (or drop one on the page)</td></tr>
+<tr><td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>L</kbd></td><td>LaTeX on or off</td></tr>
+<tr><td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd></td><td>Dark mode on or off</td></tr>
+<tr><td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd></td><td>Serif (Computer Modern) or sans-serif preview</td></tr>
+<tr><td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>H</kbd></td><td>Show this help</td></tr>
+<tr><td><kbd>F11</kbd></td><td>Full screen (in most browsers)</td></tr>
+</table>
+
+<h3>Markdown</h3>
+<pre><code># Title
+## Subtitle
+This is *italic* and this is **bold**.
+This is a [link](http://www.example.com/) and this is an ![image](imagelink.jpg).
+Write code with `...` or indent a paragraph by 4 spaces.
+&gt; This is a quote.</code></pre>
+<p>Editing shortcuts: <kbd>Ctrl</kbd> + <kbd>B</kbd> bold, <kbd>I</kbd> italic, <kbd>Q</kbd> quote, <kbd>K</kbd> code, <kbd>G</kbd> image, <kbd>O</kbd> numbered list, <kbd>H</kbd> heading, <kbd>R</kbd> rule, <kbd>Z</kbd> undo, <kbd>Y</kbd> redo.</p>
+
+<h3>LaTeX</h3>
+<pre><code>This formula $x^2+1$ is shown inline.
+This formula $$x^2+1$$ is shown in its own paragraph.</code></pre>
+
+<h3>Page break</h3>
+<p><code>\pagebreak</code> starts a new page when you print or export to PDF.</p>
+
+<h3>About</h3>
+<p>Made by <a href="https://syahravi.id">Syahravi</a>, based on <a href="https://github.com/josephernest/writing">Writing</a> by Joseph Ernest (<a href="https://twitter.com/JosephErnest">@JosephErnest</a>), MIT license. Uses <a href="https://code.google.com/archive/p/pagedown/">Pagedown</a>, <a href="https://github.com/jmcmanus/pagedown-extra">Pagedown Extra</a>, <a href="https://www.mathjax.org/">MathJax</a>, <a href="https://jquery.com/">jQuery</a>, StackOverflow&rsquo;s <a href="https://gist.github.com/gdalgas/a652bce3a173ddc59f66">editor</a> code, and the <a href="http://cm-unicode.sourceforge.net/">Computer Modern</a> font.</p>
+
+</dialog>
+
 <script type="text/javascript" src="Markdown.Converter.js"></script>
 <script type="text/javascript" src="Markdown.Sanitizer.js"></script>
 <script type="text/javascript" src="Markdown.Editor.js"></script>
 <script type="text/javascript" src="Markdown.Extra.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full"></script>
 <script type="text/javascript" src="mathjax-editing_writing.js"></script>
-<!-- <script type="text/javascript" src="jspdf.min.js"></script> -->
 <script type="text/javascript" src="jquery.min.js"></script>
-<input id="openFileInput" type="file" />
-<div id="wmd-button-bar" class="wmd-button-bar"></div>
-<textarea id="wmd-input" class="column wmd-input" spellcheck="false"></textarea>
-<div id="wmd-preview" class="column wmd-preview">
-<noscript>This text editor requires JavaScript.</noscript>
-</div>
-<div id="helpicon" class="unselectable">?</div>
-<div id="help">
-<div id="closeicon" class="unselectable">X</div>    
-<pre>    
-<a href="https://github.com/josephernest/writing">Writing</a> is a lightweight distraction-free text editor.
-Write text on the left, and the result is displayed on the right.
-
-Commands
---------
-CTRL + D: toggle display mode (editor only, preview only or both-at-the-same-time)
-CTRL + P: print or export as PDF
-CTRL + S: save source code as .MD file
-CTRL + SHIFT + O: open .MD file
-
-CTRL + SHIFT + L: enable / disable LaTeX (i.e. math formulas)
-CTRL + SHIFT + D: toggle dark mode
-CTRL + SHIFT + R: toggle roman (LaTex-like) or sans-serif font
-CTRL + SHIFT + H: show this help dialog
-
-F11: full-screen (in most browsers)
-
-Markdown syntax
----------------
-#Title
-##Subtitle
-This is *italic* and this is **bold**.
-This is a [link](http://www.example.com/) and this is an ![image](imagelink.jpg).
-Write code with `...` or by adding a 4-whitespace indent to the paragraph.
-> This is a quote.
-
-LaTeX syntax
-------------
-This formula $x^2+1$ will be displayed inline.
-This formula $$x^2+1$$ will be displayed in a new paragraph.
-
-Specific syntax
----------------
-\pagebreak will trigger a pagebreak when printing / exporting to PDF.
-
-About
------
-Made by <a href="https://twitter.com/JosephErnest">@JosephErnest</a>
-<a href="https://github.com/josephernest/writing">https://github.com/josephernest/writing</a>
-Uses <a href="https://code.google.com/archive/p/pagedown/">Pagedown</a>, <a href="https://github.com/jmcmanus/pagedown-extra">Pagedown Extra</a>, <a href="https://www.mathjax.org/">MathJax</a>, StackOverflow's <a href="https://gist.github.com/gdalgas/a652bce3a173ddc59f66">editor</a> code and the <a href="http://cm-unicode.sourceforge.net/">Computer Modern</a> font.
-</pre>    
-</div>
 
 <script type="text/javascript">
+function store(key, value) { try { localStorage.setItem(key, value); } catch (e) {} }
+function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+
 togglemathjax = function(enabled) {
     if (enabled) {
         if (!latexenabledonce)
@@ -170,11 +142,15 @@ togglemathjax = function(enabled) {
 }
 
 toggledarkmode = function(enabled){
-    $('body').toggleClass('dark-mode',enabled);
+    $('html').toggleClass('dark-mode', enabled);
 }
 
-if (localStorage.getItem("writing") !== null) {
-    $('#wmd-input').val(localStorage.getItem("writing"));
+function setPressed(selector, on) {
+    $(selector).attr('aria-pressed', on ? 'true' : 'false');
+}
+
+if (load("writing") !== null) {
+    $('#wmd-input').val(load("writing"));
 }
     
 openFile = function(e) {         
@@ -189,6 +165,7 @@ readFile = function(file){ // https://stackoverflow.com/a/26298948/1422096
   reader.onload = function(e) {
     var contents = e.target.result;
     $('#wmd-input').val(contents);        // display file content
+    store("writing", contents);
     editor.refreshPreview();
   };
   reader.readAsText(file);
@@ -205,128 +182,118 @@ $('body').on('drag dragstart dragend dragover dragenter dragleave drop', functio
 });
 
 $('#wmd-input').on('input', function() {
-    localStorage.setItem("writing", $('#wmd-input').val());
+    store("writing", $('#wmd-input').val());
 });
 
-$('#wmd-input').focus();
+var viewmodes = ['both', 'preview', 'editor'];
+var viewlabels = { both: 'Split', preview: 'Preview', editor: 'Editor' };
 
-$('#helpicon').click(function() {
-    $('#help').show();
+function setView(name) {
+    mode = name;
+    document.body.setAttribute('data-mode', name);
+    $('#btn-view').text('View: ' + viewlabels[name]);
+    if (name !== 'preview') $('#wmd-input').focus();
+}
+
+function cycleView() {
+    setView(viewmodes[(viewmodes.indexOf(mode) + 1) % viewmodes.length]);
+}
+
+function openHelp() {
+    var help = document.getElementById('help');
+    if (!help.open) help.showModal();
+}
+
+function openFileDialog() {
+    $('#openFileInput').click();
+}
+
+function saveFile() {
+    var blob = new Blob([$('#wmd-input').val()], {type: 'text/markdown;charset=utf-8'});     // https://stackoverflow.com/a/33542499/1422096
+    var url = window.URL.createObjectURL(blob);
+    var elem = window.document.createElement('a');
+    elem.href = url;
+    elem.download = 'newfile.md';
+    document.body.appendChild(elem);
+    elem.click();
+    document.body.removeChild(elem);
+    window.URL.revokeObjectURL(url);
+}
+
+function printPage() {
+    window.print();
+}
+
+function toggleLatex() {
+    latexenabled = !latexenabled;
+    store("latex", latexenabled ? "1" : "0");
+    setPressed('#btn-latex', latexenabled);
+    togglemathjax(latexenabled);
+}
+
+function toggleDark() {
+    darkmodeenabled = !darkmodeenabled;
+    store("darkmode", darkmodeenabled ? "1" : "0");
+    setPressed('#btn-dark', darkmodeenabled);
+    toggledarkmode(darkmodeenabled);
+}
+
+function toggleSerif() {
+    serifenabled = !serifenabled;
+    store("serif", serifenabled ? "1" : "0");
+    setPressed('#btn-serif', serifenabled);
+    $('html').toggleClass('texroman', serifenabled);
+}
+
+$('#btn-view').on('click', cycleView);
+$('#btn-open').on('click', openFileDialog);
+$('#btn-save').on('click', saveFile);
+$('#btn-print').on('click', printPage);
+$('#btn-latex').on('click', toggleLatex);
+$('#btn-dark').on('click', toggleDark);
+$('#btn-serif').on('click', toggleSerif);
+$('#btn-help').on('click', openHelp);
+
+// Klik di luar kotak dialog (backdrop) menutup help; Esc ditangani <dialog>.
+$('#help').on('click', function(e) {
+    if (e.target === this) this.close();
 });
 
-$('#closeicon, #wmd-input, #wmd-preview').click(function() {
-    $('#help').hide();
-});
+// Cetak selalu dari preview terang, apa pun mode tampilan dan tema (lihat @media print di styles.css).
+window.addEventListener('beforeprint', function() { toggledarkmode(false); });
+window.addEventListener('afterprint', function() { toggledarkmode(darkmodeenabled); });
 
 $(document).on('keydown', function(e) {
-    if (e.keyCode == 80 && (e.ctrlKey || e.metaKey)) {    // CTRL + P 
-        if (mode != 1) {
-            mode = 1;
-            $('#wmd-input').hide();
-            $('#wmd-preview').show();
-            $('body').removeClass('fixedheight');
-            $('html').removeClass('fixedheight');
-            toggledarkmode(false);
-            e.preventDefault();
-            window.print();
-            toggledarkmode(darkmodeenabled);
-            return false;
-        }
-        //var doc = new jsPDF();
-        //var specialElementHandlers = {'#editor': function (element, renderer) { return true; } };
-        //doc.fromHTML($('#wmd-preview').html(), 15, 15, { 'width': 170, 'elementHandlers': specialElementHandlers });
-        //doc.save('file.pdf');
-        /*var restorepage = $('body').html();
-        var printcontent = $('#wmd-preview').clone();
-        $('body').empty().html(printcontent);
-        window.print();
-        $('body').html(restorepage);
+    if (!(e.ctrlKey || e.metaKey) || e.altKey) return;
+    var key = (e.key || '').toLowerCase();
+    var action = e.shiftKey
+        ? { h: openHelp, d: toggleDark, r: toggleSerif, l: toggleLatex, o: openFileDialog }[key]
+        : { p: printPage, s: saveFile, d: cycleView }[key];
+    if (action) {
         e.preventDefault();
-        return false;*/
-    }
-    else if (e.keyCode == 83 && (e.ctrlKey || e.metaKey)) {    // CTRL + S
-        var blob = new Blob([$('#wmd-input').val()], {type: 'text'});     // https://stackoverflow.com/a/33542499/1422096
-        if (window.navigator.msSaveOrOpenBlob) {
-            window.navigator.msSaveBlob(blob, 'newfile.md');
-        }
-        else {
-            var elem = window.document.createElement('a');
-            elem.href = window.URL.createObjectURL(blob);
-            elem.download = 'newfile.md';        
-            document.body.appendChild(elem);
-            elem.click();        
-            document.body.removeChild(elem);
-        }
-        e.preventDefault();
-        return false;
-    }
-    else if (e.keyCode == 68 && (e.ctrlKey || e.metaKey) && !e.shiftKey) {    // CTRL + D
-        mode += 1; if (mode == 3) mode = 0;
-        if (mode == 1) {
-            $('#wmd-input').hide();
-            $('#wmd-preview').show();
-            $('body').removeClass('fixedheight');
-            $('html').removeClass('fixedheight');
-        }
-        else if (mode == 2) {
-            $('#wmd-preview').hide();            
-            $('#wmd-input').show().css('float', 'none').css('width', '100%').focus();
-            $('body').addClass('fixedheight');
-            $('html').addClass('fixedheight');
-        }
-        else {
-            $('#wmd-input').show().css('float', 'left').css('width', '50%').focus();
-            $('#wmd-preview').show();
-        }
-        e.preventDefault();
-        return false;
-    }        
-    else if (e.keyCode == 72 && (e.ctrlKey || e.metaKey) && e.shiftKey) {    // CTRL + H
-        $('#help').show();
-        e.preventDefault();
-        return false;
-    }
-    else if (e.keyCode == 68 && (e.ctrlKey || e.metaKey) && e.shiftKey) {    // CTRL + SHIFT + D
-      darkmodeenabled = !darkmodeenabled;
-      localStorage.setItem("darkmode", darkmodeenabled ? "1" : "0");
-      toggledarkmode(darkmodeenabled);
-      e.preventDefault();
-      return false;
-    }    
-    else if (e.keyCode == 82 && (e.ctrlKey || e.metaKey) && e.shiftKey) {    // CTRL + SHIFT + R
-        $('html').toggleClass('texroman');
-        e.preventDefault();
-        return false;
-    }    
-    else if (e.keyCode == 76 && (e.ctrlKey || e.metaKey) && e.shiftKey) {    // CTRL + SHIFT + L 
-        latexenabled = !latexenabled;
-        localStorage.setItem("latex", latexenabled ? "1" : "0");
-        togglemathjax(latexenabled);
-        e.preventDefault();
-        return false;
-    }
-    else if (e.keyCode == 79 && (e.ctrlKey || e.metaKey) && e.shiftKey) {    // CTRL + SHIFT + O
-        $('#openFileInput').click();
-        e.preventDefault();
-        return false;
-    } 
-    else if (e.keyCode == 27)  { // ESC
-        $('#help').hide();
+        action();
     }
 });
 
-var mode = 0;
+var mode = 'both';
 var latexenabledonce = false;
-var latexenabled = localStorage.getItem("latex") !== "0";
-var darkmodeenabled = localStorage.getItem("darkmode") == "1";
+var latexenabled = load("latex") !== "0";
+var darkmodeenabled = load("darkmode") == "1";
+var serifenabled = load("serif") == "1";
 var converter = Markdown.getSanitizingConverter();
 Markdown.Extra.init(converter);
 var editor = new Markdown.Editor(converter, '');
 var mjpd1 = new mjpd();
+setPressed('#btn-latex', latexenabled);
+setPressed('#btn-dark', darkmodeenabled);
+setPressed('#btn-serif', serifenabled);
+$('html').toggleClass('texroman', serifenabled);
+$('#year').text(new Date().getFullYear());
 togglemathjax(latexenabled);
 toggledarkmode(darkmodeenabled);
 editor.run();
+$('#wmd-input').focus();
 </script>
-    
+
 </body>
 </html>

@@ -1,0 +1,91 @@
+/* Hallmark · genre: editorial · macrostructure: Marquee Hero · theme: Manifesto (geometric-sans, ember accent)
+ * nav: N9 Edge-aligned minimal · footer: Ft7 Newsletter-first · enrichment: none (typography-only)
+ * anchor hue: 45 (paper/ink/rule) · accent hue: 38 (warm ember) · paper band: light
+ */
+
+:root {
+  /* Color — paper/ink/neutrals tinted toward a warm anchor (hue 45) */
+  --color-paper:       oklch(97% 0.010 45);
+  --color-paper-2:     oklch(94.05% 0.01273 48.266);
+  --color-paper-3:     oklch(91% 0.014 45);
+  --color-rule:        oklch(83% 0.013 45);
+  --color-neutral:     oklch(56% 0.010 45);
+  --color-muted:       oklch(43% 0.010 45);
+  --color-ink:         oklch(19% 0.014 45);
+  --color-ink-2:       oklch(27% 0.014 45);
+
+  /* Accent — warm ember, single hue, used sparingly */
+  --color-accent:      oklch(58% 0.20 38);
+  --color-accent-2:    oklch(52% 0.20 38);
+  --color-accent-text: oklch(46% 0.19 38); /* small/body-sized accent text — darker for 4.5:1+ on paper */
+  --color-accent-ink:  oklch(99% 0.006 38);
+  --color-focus:       oklch(28% 0.03 45);
+  --color-error:       oklch(55% 0.19 25);
+
+  /* Type — 2+1: geometric-sans display, plain-sans body, mono outlier (wordmark + metadata tags only).
+     Situs memakai font self-host dari Fonts API (astro.config.mjs); fallback var() dipakai scripts/og-image.html. */
+  --font-display: var(--font-bricolage, "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif);
+  --font-body:    var(--font-hanken, "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif);
+  --font-mono:    var(--font-plex-mono, "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace);
+
+  --text-xs:   0.64rem;
+  --text-sm:   0.8rem;
+  --text-base: 1rem;
+  --text-md:   1.25rem;
+  --text-lg:   1.5625rem;
+  --text-xl:   1.9531rem;
+  --text-2xl:  2.4414rem;
+  --text-3xl:  3.0518rem;
+  --text-4xl:  3.8147rem;
+  --text-display:   clamp(2.75rem, 5vw + 1rem, 5.25rem);
+  --text-display-s: clamp(2.25rem, 4vw + 1rem, 4rem);
+
+  /* Space — 4pt scale, named by role */
+  --space-3xs: 0.125rem;
+  --space-2xs: 0.25rem;
+  --space-xs:  0.5rem;
+  --space-sm:  0.75rem;
+  --space-md:  1rem;
+  --space-lg:  1.5rem;
+  --space-xl:  2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+  --space-4xl: 9rem;
+
+  /* Motion */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms;
+  --dur-short: 220ms;
+  --dur-long:  420ms;
+
+  /* Structure */
+  --rule-hair:  1px;
+  --rule-thick: 4px;
+  --radius-sm:  0.25rem;
+  --radius-md:  0.5rem;
+  --content-max: 75rem;
+  --banner-height: 4.5rem;
+
+  /* Z-index — six named levels */
+  --z-base:       1;
+  --z-raised:     10;
+  --z-dropdown:   100;
+  --z-sticky:     200;
+  --z-sticky-nav: 210;
+  --z-modal:      400;
+  --z-toast:      500;
+  --z-tooltip:    600;
+
+  /* "Trusted Partner" — scoped extension for the Selected Work showcase only.
+     Does not replace the site-wide paper/ink/ember identity above. */
+  --font-serif:          var(--font-source-serif, "Source Serif 4", Georgia, serif);
+  --color-trust-navy:      #1B2A4A;
+  --color-trust-navy-2:    #14213A; /* hover/active state on navy */
+  --color-trust-paper:     #F8F6F3;
+  --color-trust-gold:      #C4933F; /* decorative: borders, chips, text-on-navy (5.1:1) */
+  --color-trust-gold-text: #8C6A2D; /* AA-safe gold for text/links on light backgrounds (~5.2:1) */
+  --shadow-card:       0 1px 2px rgba(27, 42, 74, 0.06), 0 1px 3px rgba(27, 42, 74, 0.08);
+  --shadow-card-hover: 0 2px 4px rgba(27, 42, 74, 0.08), 0 8px 20px rgba(27, 42, 74, 0.12);
+}
